@@ -73,12 +73,14 @@ svgEl('path',{d:`M200 200 L${p[0]} ${p[1]} A174 174 0 0 1 ${q[0]} ${q[1]}Z`,fill
 let xy=polar(142,angle),t=svgEl('text',{x:xy[0],y:xy[1]+7,'text-anchor':'middle','font-size':23,'font-weight':800,fill:i%2===0?'#202428':'#fff'},g);t.textContent=n;
 let choose=()=>hit(n*mult,(mult===1?'S':mult===2?'D':'T')+n);g.addEventListener('click',choose);g.addEventListener('keydown',e=>{if(e.key==='Enter'||e.key===' '){e.preventDefault();choose()}});
 });
-svgEl('circle',{cx,cy,r:106,fill:'none',stroke:'#9daabd','stroke-width':2,'pointer-events':'none'},board);svgEl('circle',{cx,cy,r:70,fill:'none',stroke:'#aeb9c8','stroke-width':2,'pointer-events':'none'},board);
-let outer=svgEl('g',{class:'number-hit',role:'button',tabindex:'0','aria-label':'BULL 25'},board);svgEl('circle',{cx,cy,r:31,fill:'#a2a19c',stroke:'#eee','stroke-width':2},outer);
-let a=svgEl('text',{x:cx,y:cy-7,'text-anchor':'middle','font-size':12,'font-weight':800,fill:'#1e2529'},outer);a.textContent='BULL';
-let inner=svgEl('g',{class:'number-hit',role:'button',tabindex:'0','aria-label':'BULL 50'},board);svgEl('circle',{cx,cy:cy+11,r:16,fill:'#626a70',stroke:'#e0e4e6','stroke-width':1.5},inner);
-let b=svgEl('text',{x:cx,y:cy+15,'text-anchor':'middle','font-size':12,'font-weight':800,fill:'#fff'},inner);b.textContent='50';
-outer.addEventListener('click',()=>hit(25,'BULL 25'));inner.addEventListener('click',e=>{e.stopPropagation();hit(50,'BULL 50')});for(let [g,v,l] of [[outer,25,'BULL 25'],[inner,50,'BULL 50']])g.addEventListener('keydown',e=>{if(e.key==='Enter'||e.key===' '){e.preventDefault();e.stopPropagation();hit(v,l)}});
+// Dvě velké soustředné klikací oblasti: vnitřní kruh 50, mezikruží 25.
+let outer=svgEl('g',{class:'number-hit',role:'button',tabindex:'0','aria-label':'BULL 25'},board);
+svgEl('circle',{cx,cy,r:106,fill:'#a2a19c',stroke:'#eee','stroke-width':2},outer);
+let inner=svgEl('g',{class:'number-hit',role:'button',tabindex:'0','aria-label':'BULL 50'},board);
+svgEl('circle',{cx,cy,r:49,fill:'#626a70',stroke:'#e0e4e6','stroke-width':2},inner);
+outer.addEventListener('click',()=>hit(25,'BULL 25'));
+inner.addEventListener('click',e=>{e.stopPropagation();hit(50,'BULL 50')});
+for(let [g,v,l] of [[outer,25,'BULL 25'],[inner,50,'BULL 50']])g.addEventListener('keydown',e=>{if(e.key==='Enter'||e.key===' '){e.preventDefault();e.stopPropagation();hit(v,l)}});
 }
 drawBoard();
 renderSetup();if(load())$('resume').classList.remove('hidden');
