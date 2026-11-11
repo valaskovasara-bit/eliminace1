@@ -74,7 +74,7 @@ function drawBoard(){let board=$('dartboard'),cx=200,cy=200,step=Math.PI/10;cons
 svgEl('circle',{cx,cy,r:195,fill:'#303438',stroke:'#8c9bac','stroke-width':3},board);
 ring.forEach((n,i)=>{let a=(i-.5)*step,b=(i+.5)*step,p=polar(174,a),q=polar(174,b),angle=i*step;
 let g=svgEl('g',{class:'number-hit',role:'button',tabindex:'0','aria-label':'Číslo '+n},board);
-svgEl('path',{d:`M200 200 L${p[0]} ${p[1]} A174 174 0 0 1 ${q[0]} ${q[1]}Z`,fill:i%2===0?'#f0e4cb':'#151515',stroke:'#a6a39b','stroke-width':1.1},g);
+svgEl('path',{d:`M200 200 L${p[0]} ${p[1]} A174 174 0 0 1 ${q[0]} ${q[1]}Z`,fill:i%2===0?'#151515':'#f0e4cb',stroke:'#a6a39b','stroke-width':1.1},g);
 let xy=polar(142,angle),t=svgEl('text',{x:xy[0],y:xy[1]+7,'text-anchor':'middle','font-size':23,'font-weight':800,fill:i%2===0?'#202428':'#fff'},g);t.textContent=n;
 let choose=()=>{flashSegment(g);hit(n*mult,(mult===1?'S':mult===2?'D':'T')+n)};g.addEventListener('click',choose);g.addEventListener('keydown',e=>{if(e.key==='Enter'||e.key===' '){e.preventDefault();choose()}});
 });
